@@ -51,12 +51,13 @@ class _MyHomePageState extends State<MyHomePage> {
               ],
             ),
             Center(
-              child: Text(" Software Developer", style: GoogleFonts.poiretOne(fontSize: 30),),
+              child: Text(" Software Developer", style: GoogleFonts.poiretOne(fontSize: 30, fontWeight: FontWeight.bold),),
             ),
             SizedBox(height: 15,),
             Container(
                 margin: const EdgeInsets.only(left: 30.0, right: 30.0),
                 child: Divider(
+                  thickness: 2,
                   color: Colors.red,
                 )),
             SizedBox(height: 15,),
