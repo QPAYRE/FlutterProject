@@ -102,7 +102,34 @@ class _MyHomePageState extends State<MyHomePage> {
                 return const CircularProgressIndicator();
               },
             ),
+            Center(
+              child: RaisedButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => SecondRoute()),
+                  );
+                },
+                child: Text('next page !'),
+              ),
+            ),
           ],
+        ),
+      ),
+    );
+  }
+}
+
+class SecondRoute extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(
+        child: RaisedButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          child: Text('Go back!'),
         ),
       ),
     );
