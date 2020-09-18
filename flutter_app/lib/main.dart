@@ -1,5 +1,9 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert' as convert;
 
 void main() {
   runApp(MyApp());
@@ -29,9 +33,23 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  Future<String> getPos() async {
+    var url = "https://api-adresse.data.gouv.fr/search/?q=toulouse&type=street";
+
+    var response = await http.get(url);
+    if (response.statusCode == 200) {
+      Map<String, dynamic> map = json.decode(response.body);
+      List<dynamic> data = map['features'];
+      return(data[0]['properties']['label']);
+    } else {
+      print('Request failed with status: ${response.statusCode}.');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
+    var locate = getPos();
+    print(locate);
     return Scaffold(
       backgroundColor: Colors.green,
       body: Center(
@@ -74,6 +92,15 @@ class _MyHomePageState extends State<MyHomePage> {
                 Icon(Icons.mail),
                 Text("  quentin.payre@gmail.com", style: TextStyle(fontSize: 20),),
               ],
+            ),
+            SizedBox(height: 20,),
+            FutureBuilder(
+              future: getPos(),
+              builder: (context, AsyncSnapshot<String> snapshot) {
+                if (snapshot.hasError) return Text('${snapshot.error}');
+                if (snapshot.hasData) return Text('${snapshot.data}');
+                return const CircularProgressIndicator();
+              },
             ),
           ],
         ),
